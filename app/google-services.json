@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "43591798310",
+    "firebase_url": "https://messaging-7513a.firebaseio.com",
+    "project_id": "messaging-7513a",
+    "storage_bucket": "messaging-7513a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43591798310:android:976938583e23a3f3",
+        "android_client_info": {
+          "package_name": "me.kvelcich.messaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43591798310-uig0uudfc244e0ck0rd31jns0422pgfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoZmDx1pPM5QVHp8VgJbuHW63jgl871tw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

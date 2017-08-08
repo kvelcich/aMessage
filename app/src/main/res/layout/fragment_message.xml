@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE">
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/linearLayout"
+        android:divider="@null"
+        android:dividerHeight="0dp">
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout">
+
+        <EditText
+            android:id="@+id/content"
+            android:hint="@string/edit_hint_content"
+            android:maxLines="5"
+            android:background="@drawable/sendmessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.775"
+            android:padding="10dp"
+            android:inputType="textAutoCorrect|textCapSentences|textMultiLine" />
+
+        <ImageView
+            android:src="@drawable/sendarrow"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:src="@drawable/send"
+            android:id="@+id/send"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight=".2"/>
+
+    </LinearLayout>
+</RelativeLayout>
