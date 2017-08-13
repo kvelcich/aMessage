@@ -19,6 +19,7 @@ script = applescript.AppleScript('''
 def sendMessage(phone_number, message):
     script.run(phone_number, message)
 
+# example - this data will eventaully come from the server POST request
 my_phone = '9712793494'
 message = 'hola hola!'
 
