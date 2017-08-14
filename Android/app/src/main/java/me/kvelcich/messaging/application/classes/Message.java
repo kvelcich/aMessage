@@ -1,20 +1,41 @@
 package me.kvelcich.messaging.application.classes;
 
-import java.io.Serializable;
-import java.util.Calendar;
+public class Message {
+    private int chatId;
+    private int senderId;
+    private String content;
+    private String timestamp;
 
-public class Message implements Serializable {
-    public String contact;
-    public String content;
-    public boolean sent;
-    public long time;
-
-    public Message() {
-    }
-    public Message(String contact, String content, boolean sent) {
-        this.contact = contact;
+    public Message(int chatId, int senderId, String content, String timestamp) {
+        this.chatId = chatId;
+        this.senderId = senderId;
         this.content = content;
-        this.sent = sent;
-        this.time = Calendar.getInstance().getTimeInMillis();
+        this.timestamp = timestamp;
+    }
+
+    public Message(int senderId, String content, String timestamp) {
+        this.senderId = senderId;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
+
+    public int getChatId() {
+        return chatId;
+    }
+
+    public int getSenderId() {
+        return senderId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public Boolean isSent() {
+        return senderId == -1;
     }
 }

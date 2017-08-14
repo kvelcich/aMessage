@@ -1,42 +1,54 @@
 package me.kvelcich.messaging;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
-import com.google.firebase.iid.FirebaseInstanceId;
-import me.kvelcich.messaging.application.classes.Message;
-import me.kvelcich.messaging.application.dialog.dialogAddress;
-import me.kvelcich.messaging.application.fragment.fragmentMessage;
 
-public class Main extends AppCompatActivity {
+import me.kvelcich.messaging.application.database.DatabaseHelper;
+import me.kvelcich.messaging.application.database.Impl.ChatImpl;
+import me.kvelcich.messaging.application.fragment.FragmentChat;
+import me.kvelcich.messaging.application.fragment.FragmentMessage;
+
+public class Main extends Activity {
+
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Firebase
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
-        Log.d("", "TOKEN: " + token);
 
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.editToolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_chat);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container, fragmentMessage.newInstance(), "msgView");
-        fragmentTransaction.commit();
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().remove(fragment).commit();
+
+                fragment = new FragmentMessage();
+                Bundle bundle = new Bundle();
+                bundle.putInt("chatId", -1);
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+
+                setContentView(R.layout.activity_main);
+                EditText target = (EditText) findViewById(R.id.target);
+                target.requestFocus();
+
+                fab.hide();
+            }
+        });
+
+        fragment = new FragmentChat();
+        getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
     }
 
     @Override
@@ -48,31 +60,11 @@ public class Main extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            FragmentManager fm = getFragmentManager();
-            dialogAddress dialogFragment = new dialogAddress();
-            dialogFragment.show(fm, null);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        // Register mMessageReceiver to receive messages.
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("msg"));
     }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            fragmentMessage fragment = (fragmentMessage) getFragmentManager().findFragmentByTag("msgView");
-            fragment.insert((Message) getIntent().getSerializableExtra("message"));
-        }
-    };
 }

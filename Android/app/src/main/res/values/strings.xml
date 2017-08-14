@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Messaging</string>
+    <string name="app_name">aMessage</string>
     <string name="action_settings">Settings</string>
     <string name="edit_hint_content">Send Message</string>
     <string name="edit_hint_target">Send To</string>
+
 </resources>
