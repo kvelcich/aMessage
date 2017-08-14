@@ -9,27 +9,25 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import me.kvelcich.messaging.application.classes.Message;
 import me.kvelcich.messaging.R;
 
 public class MessagesAdapter extends BaseAdapter {
 
-    private ArrayList<Message> messages;
+    private List<Message> messages;
     private LayoutInflater layoutInflater;
-    private Context context;
 
-    public MessagesAdapter(Context context, ArrayList<Message> messages) {
+    public MessagesAdapter(Context context, List<Message> messages) {
         layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.context = context;
 
         this.messages = messages;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (messages.get(position).sent)
+        if (messages.get(position).isSent())
             return 1;
         return 2;
     }
@@ -62,9 +60,9 @@ public class MessagesAdapter extends BaseAdapter {
                     convertView = layoutInflater.inflate(R.layout.list_messagesent, parent, false);
                     viewHolder.Content = (TextView) convertView.findViewById(R.id.msg);
 
-                    viewHolder.Content.setText(messages.get(position).content);
+                    viewHolder.Content.setText(messages.get(position).getContent());
                     if (position > 0) {
-                        if (messages.get(position).sent == messages.get(position - 1).sent) {
+                        if (messages.get(position).isSent() == messages.get(position - 1).isSent()) {
                             viewHolder.Arrow = (ImageView) convertView.findViewById(R.id.arrow);
                             viewHolder.Arrow.setVisibility(View.INVISIBLE);
                             viewHolder.relativeLayout = (RelativeLayout) convertView.findViewById(R.id.layout);
@@ -76,9 +74,9 @@ public class MessagesAdapter extends BaseAdapter {
                     convertView = layoutInflater.inflate(R.layout.list_messagereceived, parent, false);
                     viewHolder.Content = (TextView) convertView.findViewById(R.id.msg);
 
-                    viewHolder.Content.setText(messages.get(position).content);
+                    viewHolder.Content.setText(messages.get(position).getContent());
                     if (position > 0) {
-                        if (messages.get(position).sent == messages.get(position - 1).sent) {
+                        if (messages.get(position).isSent() == messages.get(position - 1).isSent()) {
                             viewHolder.Arrow = (ImageView) convertView.findViewById(R.id.arrow);
                             viewHolder.Arrow.setVisibility(View.INVISIBLE);
                             viewHolder.relativeLayout = (RelativeLayout) convertView.findViewById(R.id.layout);
@@ -96,9 +94,9 @@ public class MessagesAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public class ViewHolder {
-        public TextView Content;
-        public ImageView Arrow;
-        public RelativeLayout relativeLayout;
+    private class ViewHolder {
+        private TextView Content;
+        private ImageView Arrow;
+        private RelativeLayout relativeLayout;
     }
 }
