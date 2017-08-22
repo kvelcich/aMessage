@@ -5,6 +5,6 @@ app = Flask(__name__)
 def main():
     return "Flask server is running..."
  
-@app.route("/new_message")
+@app.route("/new_message", methods=['POST'])
 def new_message():
 	return "Sending new message..."
